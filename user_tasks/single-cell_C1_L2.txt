@@ -1,0 +1,148 @@
+
+•--------------------------------------------------------------------------------------------------•
+| •----------------------------------------------------------------------------------------------• |
+| |                                                                                              | |
+| |                                                                                              | |
+| |                                          - RIPLEY -                                          | |
+| |                                                                                              | |
+| |                                                                                              | |
+| •----------------------------------------------------------------------------------------------• |
+•--------------------------------------------------------------------------------------------------•
+
+TASK SHEET
+V4.01, 01/08/18
+
+This task sheet will be copied into your RED (RIPLEY Execution Directory).
+
+1. Lines beginning with <COMMAND> key will be read into the task reader.
+2. Required commands are denoted by the (*) symbol.
+3. Comments can be created using the # symbol. Commented text in the <COMMAND> key will not be read.
+
+•------------------------------------------- USER NOTES -------------------------------------------• 
+
+USER NAME: Justin Lim
+
+CURRENT DATE: 02/22/18
+
+DESCRIPTION: Old Rubenstein C1 single-cell data, 2/6.
+
+
+
+•--------------------------------------------------------------------------------------------------•
+|                                                                                                  |
+|                                             - PREP -                                             |
+|                                                                                                  |
+•--------------------------------------------------------------------------------------------------•
+
+•-------------------------------------------- DOWNLOAD --------------------------------------------•
+
+# The URL given by SLIMS for downloading data via FTP/rsync request.
+<FTP COMMAND> 
+
+# Single or multiple SRR IDs (comma delimited, if multiple) for download via fastq-dump.
+<SRR IDs> 
+
+# The directory where fastq files are downloaded. (*) 
+<RAW DATA DIR> /share/nordlab/rawdata/Project_ANIZ_L2_C1_799-1056-MGE
+
+•----------------------------------------- SAMPLE ID INFO -----------------------------------------•
+
+# Is the data single or paired end (SE or PE)? (*)
+<SINGLE PAIR> SE
+
+# Suffix in file names to be removed when aligning fastq files.
+# For SE data this can be left blank. For PE data, use the suffix that denotes forward strand.
+<FASTQ SUFFIX> _R1.fastq
+
+
+
+•--------------------------------------------------------------------------------------------------•
+|                                                                                                  |
+|                                             - STAR -                                             |
+|                                                                                                  |
+•--------------------------------------------------------------------------------------------------•
+
+# STAR version
+<STAR MODULE> star/2.5.2b
+
+•-------------------------------------------- REF INFO --------------------------------------------•
+
+# Reference table to be used: see reference_paths directory (file name only). (*)
+<REF TABLE> cabernet_paths.txt
+
+# Reference genome number (column ID in reference table). (*)
+<REF ID> 5
+
+# Whether you want custom additions to your reference genome/annotation (T or F). (*)
+<CUSTOMIZE> T
+
+•------------------------ CUSTOM VARIABLE PATHS (only if <CUSTOMIZE> == T) ------------------------•
+
+# User is responsible for making sure additions match reference and annotation file.
+# These are normally .fa and .gtf respectively.
+
+# File name of reference genome additions.
+<FA ADD> C1-singlecell-markers.fa
+
+# File name of annotation additions.
+<ANNO ADD> annotations.CUSTOM.txt
+
+# File name of new custom reference genome.
+<CUSTOM FA> reference_custom.fa
+
+# File name of new custom annotation file.
+<CUSTOM ANNO> annotation_custom.gtf
+
+•---------------------------------------- INDEX PARAMETERS ----------------------------------------•
+
+# Full file path to STAR index output directory. (*)
+<INDEX DIR> /share/nordlab/users/kjulim/STAR_INDEX/Mouse_ensembl_GRCm38_100bp_CUSTOM
+
+# STAR parameter, number of available cores on server (cabernet = 8). (*)
+<RUN THREAD> 8
+
+# STAR parameter, read length of sample fastq -1. (*)
+<SJBD OVERHANG> 99
+
+# Other indexing parameters specific to this analysis.
+<INDEX PARAMS> 
+
+•---------------------------------------- ALIGN PARAMETERS ----------------------------------------•
+
+# Full file path to STAR align output directory. (*)
+<POST DIR> /share/nordlab/users/kjulim/SC_Old_L2_processed
+
+# Whether sample fastq's are compressed or not (.gz, .bzip2).
+<ZIPPED> 
+
+# Other indexing parameters specific to this analysis.
+<ALIGN PARAMS> 
+
+
+
+•--------------------------------------------------------------------------------------------------•
+|                                                                                                  |
+|                                             - POST -                                             |
+|                                                                                                  |
+•--------------------------------------------------------------------------------------------------•
+
+•----------------------------------------- FEATURE COUNTS -----------------------------------------•
+
+# Subread version
+<SUBREAD MODULE> subread/1.5.0-p1
+
+# Other feature count parameters
+<FEATURECOUNT PARAMS> -t exon
+
+•---------------------------------------- SAMTOOLS MPILEUP ----------------------------------------•
+
+# Samtools version
+<SAMTOOLS MODULE> samtools/1.4.1
+
+# Other feature count parameters
+<MPILEUP PARAMS> -t AD
+
+•------------------------------------------- OTHER CMDS -------------------------------------------•
+
+# Space for other post processing parameters
+

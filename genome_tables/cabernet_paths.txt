@@ -1,0 +1,67 @@
+
+•--------------------------------------------------------------------------------------------------•
+| •----------------------------------------------------------------------------------------------• |
+| |                                                                                              | |
+| |                                                                                              | |
+| |                                          - RIPLEY -                                          | |
+| |                                                                                              | |
+| |                                                                                              | |
+| •----------------------------------------------------------------------------------------------• |
+•--------------------------------------------------------------------------------------------------•
+
+ID	ORGANISM	SPECIES	ASSEMBLY	GENOME
+-------------------------------------------
+0	Human	Homo_sapiens	Gencode	GRCh38
+1	Human	Homo_sapiens	Gencode	GRCh37
+2	Human	Homo_sapiens	UCSC	hg19
+3	Mouse	Mus_musculus	Gencode	GRCm38
+4	Mouse	Mus_musculus	Gencode	GRCm37
+5	Mouse	Mus_musculus	Ensembl	GRCm38
+6	Mouse	Mus_musculus	UCSC	mm10
+7	Mouse	Mus_musculus	UCSC	mm9
+8	Rat	Rattus_norvegicus	UCSC	rn5
+
+<REF ID> 0
+<REF FA> /share/nordlab/genomes/Homo_sapiens/Gencode/24/FASTA/GRCh38.primary_assembly.genome.fa
+<REF ANNO> /share/nordlab/genomes/Homo_sapiens/Gencode/24/Annotations/gencode.v24.annotation.gtf
+<REF BED> /share/nordlab/genomes/Homo_sapiens/Gencode/24/Annotations/hg38_knownGene.bed
+
+<REF ID> 1
+<REF FA> /share/nordlab/genomes/Homo_sapiens/Gencode/19/FASTA/GRCh37.p13.genome.fa
+<REF ANNO> /share/nordlab/genomes/Homo_sapiens/Gencode/19/Annotations/gencode.v19.annotation.gtf
+<REF BED> /share/nordlab/genomes/Homo_sapiens/Gencode/19/Annotations/hg19_knownGene.bed
+
+<REF ID> 2
+<REF FA> /share/nordlab/genomes/Homo_sapiens/UCSC/hg19/sequence/hg19.fa
+<REF ANNO> 'GTF file does not exist for this genome yet.'
+<REF BED> /share/nordlab/genomes/Homo_sapiens/UCSC/hg19/annotation/hg19_knownGene.bed
+
+<REF ID> 3
+<REF FA> /share/nordlab/genomes/Mus_musculus/Gencode/M8/FASTA/GRCm38.primary_assembly.genome.fa
+<REF ANNO> /share/nordlab/genomes/Mus_musculus/Gencode/M8/Annotations/gencode.vM8.primary_assembly.annotation.gtf
+<REF BED> X
+
+<REF ID> 4
+<REF FA> /share/nordlab/genomes/Mus_musculus/Gencode/M1/FASTA/NCBIM37.genome.fa
+<REF ANNO> /share/nordlab/genomes/Mus_musculus/Gencode/M1/Annotations/gencode.vM1.annotation.gtf
+<REF BED> X
+
+<REF ID> 5
+<REF FA> /share/nordlab/genomes/Mus_musculus/Ensembl/GRCm38/Sequence/WholeGenomeFasta/genome.fa
+<REF ANNO> /share/nordlab/genomes/Mus_musculus/Ensembl/GRCm38/Annotation/Genes/genes.gtf
+<REF BED> /share/nordlab/users/kjulim/mm10_GENCODE_VM9_basic.bed
+
+<REF ID> 6
+<REF FA> /share/nordlab/genomes/Mus_musculus/UCSC/mm10/Sequence/WholeGenomeFasta/genome.fa
+<REF ANNO> /share/nordlab/genomes/Mus_musculus/UCSC/mm10/Annotation/Genes/genes.gtf
+<REF BED> /share/nordlab/genomes/Mus_musculus/UCSC/mm10/Annotation/Genes/genes.sorted.bed
+
+<REF ID> 7
+<REF FA> /share/nordlab/genomes/Mus_musculus/UCSC/mm9/Sequence/WholeGenomeFasta/genome.fa
+<REF ANNO> /share/nordlab/genomes/Mus_musculus/UCSC/mm9/Annotation/Genes/genes.gtf
+<REF BED> /share/nordlab/genomes/Mus_musculus/UCSC/mm9/Annotation/Genes/mm9_knownGene.bed
+
+<REF ID> 8
+<REF FA> /share/nordlab/genomes/Rattus_norvegicus/UCSC/rn5/Sequence/WholeGenomeFasta/genome.fa
+<REF ANNO> /share/nordlab/genomes/Rattus_norvegicus/UCSC/rn5/Annotation/Genes/genes.gtf
+<REF BED> /share/nordlab/genomes/Rattus_norvegicus/UCSC/rn5/Annotation/Genes/genes.sorted.bed

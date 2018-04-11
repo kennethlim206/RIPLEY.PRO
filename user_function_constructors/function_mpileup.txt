@@ -1,0 +1,84 @@
+
+•--------------------------------------------------------------------------------------------------•
+| •----------------------------------------------------------------------------------------------• |
+| |                                                                                              | |
+| |                                                                                              | |
+| |                                          - RIPLEY -                                          | |
+| |                                                                                              | |
+| |                                                                                              | |
+| •----------------------------------------------------------------------------------------------• |
+•--------------------------------------------------------------------------------------------------•
+
+CONSTRUCTOR SHEET
+V4.01, 01/08/18
+
+This function constructor sheet will be copied into your RED (RIPLEY Execution Directory).
+
+1. Lines beginning with <COMMAND> key will be read into the constructor reader.
+2. All command lines are required.
+3. Comments can be created using the # symbol. Commented text in the <COMMAND> key will not be read.
+
+•--------------------------------------------------------------------------------------------------•
+|                                                                                                  |
+|                                      - CONSTRUCTOR PARAMS -                                      |
+|                                                                                                  |
+•--------------------------------------------------------------------------------------------------•
+
+<FUNCTION NAME> MPILEUP
+
+# Function to be run automatically after this one (constructor file name)
+<AUTO CALL> function_mpileup_parser.txt
+
+# Dependecy (afterok, afterany, etc.)
+<DEPENDENCY> afterok
+
+# Sbatch parameters
+<TIME> 02:00:00
+<PARTITION> gc128
+<CORES> default
+<MEM PER CPU> 4GB
+
+
+
+•--------------------------------------------------------------------------------------------------•
+|                                          - INPUT CMDs -                                          |
+•--------------------------------------------------------------------------------------------------•
+
+# Use the variable <INPUT FILE> in the <SCRIPT COMMAND> below
+
+# Input files can be found in this directory (ONLINE, RAW, POST:[NAME])
+<INPUT DIR> POST:ALIGN
+
+# Type of input file into this command (URL, SRR, FASTQ, BAM, OTHER:[SUFFIX], NONE)
+<INPUT TYPE> BAM
+
+# Analyze one file per script command or all files at once (SINGLE/ALL:[SEPARATOR])
+<INPUT MULT> ALL: 
+
+
+
+•--------------------------------------------------------------------------------------------------•
+|                                          - OUTPUT CMD -                                          |
+•--------------------------------------------------------------------------------------------------•
+
+# Output files can be found in this directory (RAW, INDEX, POST:[JOB NAME])
+<OUTPUT DIR> POST:MP_RAW
+
+
+
+•--------------------------------------------------------------------------------------------------•
+|                                          - SCRIPT CMD -                                          |
+•--------------------------------------------------------------------------------------------------•
+
+# Any task sheet variables may be used below.
+# The shell scripts will be created in the output directory's RED.
+# Automatically stored variables for use here:
+# <INPUT FILES FULL>, <INPUT FILES TRIMMED>, <REVERSE STRAND>, <USE FA>, <USE ANNO>, <WORKING DIR>
+
+<SCRIPT COMMAND> {
+
+module load <SAMTOOLS MODULE>
+
+samtools mpileup -u -v <MPILEUP PARAMS> -f <USE FA> --region <AMP CHROM>:<AMP START>-<AMP END> --output <OUTPUT DIR>/<AMP NAME>.txt <INPUT FILES FULL>
+
+}

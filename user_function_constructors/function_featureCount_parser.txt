@@ -1,0 +1,82 @@
+
+•--------------------------------------------------------------------------------------------------•
+| •----------------------------------------------------------------------------------------------• |
+| |                                                                                              | |
+| |                                                                                              | |
+| |                                          - RIPLEY -                                          | |
+| |                                                                                              | |
+| |                                                                                              | |
+| •----------------------------------------------------------------------------------------------• |
+•--------------------------------------------------------------------------------------------------•
+
+CONSTRUCTOR SHEET
+V4.01, 01/08/18
+
+This function constructor sheet will be copied into your RED (RIPLEY Execution Directory).
+
+1. Lines beginning with <COMMAND> key will be read into the constructor reader.
+2. All command lines are required.
+3. Comments can be created using the # symbol. Commented text in the <COMMAND> key will not be read.
+
+•--------------------------------------------------------------------------------------------------•
+|                                                                                                  |
+|                                      - CONSTRUCTOR PARAMS -                                      |
+|                                                                                                  |
+•--------------------------------------------------------------------------------------------------•
+
+<FUNCTION NAME> FC_MERGE
+
+# Function to be run automatically after this one (constructor file name)
+<AUTO CALL> 
+
+# Dependecy (afterok, afterany, etc.)
+<DEPENDENCY> afterok
+
+# Sbatch parameters
+<TIME> 00:30:00
+<PARTITION> gc256
+<CORES> default
+<MEM PER CPU> default
+
+
+
+•--------------------------------------------------------------------------------------------------•
+|                                          - INPUT CMDs -                                          |
+•--------------------------------------------------------------------------------------------------•
+
+# Use the variable <INPUT FILE> in the <SCRIPT COMMAND> below
+
+# Input files can be found in this directory (ONLINE, RAW, POST:[NAME])
+<INPUT DIR> POST:FEATURECOUNT
+
+# Type of input file into this command (URL, SRR, FASTQ, BAM, OTHER:[SUFFIX], NONE)
+<INPUT TYPE> NONE
+
+# Analyze one file per script command or all files at once (SINGLE/ALL:[SEPARATOR])
+<INPUT MULT> SINGLE
+
+
+
+•--------------------------------------------------------------------------------------------------•
+|                                          - OUTPUT CMD -                                          |
+•--------------------------------------------------------------------------------------------------•
+
+# Output files can be found in this directory (RAW, INDEX, POST:[JOB NAME])
+<OUTPUT DIR> POST:FEATURECOUNT
+
+
+
+•--------------------------------------------------------------------------------------------------•
+|                                          - SCRIPT CMD -                                          |
+•--------------------------------------------------------------------------------------------------•
+
+# Any task sheet variables may be used below.
+# The shell scripts will be created in the output directory's RED.
+# Automatically stored variables for use here:
+# <INPUT FILES FULL>, <INPUT FILES TRIMMED>, <USE FA>, <USE ANNO>, <WORKING DIR>
+
+<SCRIPT COMMAND> {
+
+python <WORKING DIR>/user_function_constructors/function_tools/featureCount_parser.py <INPUT DIR>
+
+}

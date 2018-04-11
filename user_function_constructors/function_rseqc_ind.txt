@@ -1,0 +1,97 @@
+
+•--------------------------------------------------------------------------------------------------•
+| •----------------------------------------------------------------------------------------------• |
+| |                                                                                              | |
+| |                                                                                              | |
+| |                                          - RIPLEY -                                          | |
+| |                                                                                              | |
+| |                                                                                              | |
+| •----------------------------------------------------------------------------------------------• |
+•--------------------------------------------------------------------------------------------------•
+
+CONSTRUCTOR SHEET
+V4.01, 01/08/18
+
+This function constructor sheet will be copied into your RED (RIPLEY Execution Directory).
+
+1. Lines beginning with <COMMAND> key will be read into the constructor reader.
+2. All command lines are required.
+3. Comments can be created using the # symbol. Commented text in the <COMMAND> key will not be read.
+
+•--------------------------------------------------------------------------------------------------•
+|                                                                                                  |
+|                                      - CONSTRUCTOR PARAMS -                                      |
+|                                                                                                  |
+•--------------------------------------------------------------------------------------------------•
+
+<FUNCTION NAME> RSEQC_IND
+
+# Function to be run automatically after this one (constructor file name)
+<AUTO CALL> 
+
+# Dependecy (afterok, afterany, etc.)
+<DEPENDENCY> afterok
+
+# Sbatch parameters
+<TIME> 24:00:00
+<PARTITION> gc128
+<CORES> default
+<MEM PER CPU> 8GB
+
+
+
+•--------------------------------------------------------------------------------------------------•
+|                                          - INPUT CMDs -                                          |
+•--------------------------------------------------------------------------------------------------•
+
+# Use the variable <INPUT FILE> in the <SCRIPT COMMAND> below
+
+# Input files can be found in this directory (ONLINE, RAW, POST:[NAME])
+<INPUT DIR> POST:ALIGN
+
+# Type of input file into this command (URL, SRR, FASTQ, BAM, OTHER:[SUFFIX], NONE)
+<INPUT TYPE> BAM
+
+# Analyze one file per script command or all files at once (SINGLE/ALL:[SEPARATOR])
+<INPUT MULT> SINGLE
+
+
+
+•--------------------------------------------------------------------------------------------------•
+|                                          - OUTPUT CMD -                                          |
+•--------------------------------------------------------------------------------------------------•
+
+# Output files can be found in this directory (RAW, INDEX, POST:[JOB NAME])
+<OUTPUT DIR> POST:RSEQC
+
+
+
+•--------------------------------------------------------------------------------------------------•
+|                                          - SCRIPT CMD -                                          |
+•--------------------------------------------------------------------------------------------------•
+
+# Any task sheet variables may be used below.
+# The shell scripts will be created in the output directory's RED.
+# Automatically stored variables for use here:
+# <INPUT FILES FULL>, <INPUT FILES TRIMMED>, <REVERSE STRAND>, <USE FA>, <USE ANNO>, <WORKING DIR>
+
+<SCRIPT COMMAND> {
+
+module load rseqc/2.6.3
+
+bam_stat.py -i <INPUT FILES FULL> > <OUTPUT DIR>/bam_stat_<INPUT FILES TRIMMED>.txt
+
+read_distribution.py -i <INPUT FILES FULL> -r <USE BED> > <OUTPUT DIR>/read_dist_<INPUT FILES TRIMMED>.txt
+
+read_duplication.py -i <INPUT FILES FULL> -o <OUTPUT DIR>/read_dup_<INPUT FILES TRIMMED>
+
+read_GC.py -i <INPUT FILES FULL> -o <OUTPUT DIR>/read_GC_<INPUT FILES TRIMMED>
+
+
+
+}
+
+# RPKM_saturation.py -i <INPUT FILES FULL> -o <OUTPUT DIR> -r <USE BED>
+# FPKM_count -i <INPUT FILES FULL> -o <OUTPUT DIR> -r <USE BED>
+# bam_stat.py -i <INPUT FILES FULL>
+# read_GC.py -i <INPUT FILES FULL>
