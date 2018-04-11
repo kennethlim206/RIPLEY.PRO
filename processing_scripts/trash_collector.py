@@ -12,13 +12,16 @@ def main():
 	# If there are queen modules in temp folder
 	if files[0] != "":
 		for f in files:
-			ID = f.split("-", 1)[1]
-			ID = ID.split(".", 1)[0]
+			prefix = f.split("-", 1)[0]
 
-			report = commands.getoutput("sacct --jobs=%s" % ID)
+			if prefix != "trash":
+				ID = f.split("-", 1)[1]
+				ID = ID.split(".", 1)[0]
 
-			if "RUNNING" not in report and "PENDING" not in report:
-				os.popen("rm %s" % f)
+				report = commands.getoutput("sacct --jobs=%s" % ID)
+
+				if "RUNNING" not in report and "PENDING" not in report:
+					os.popen("rm %s" % f)
 
 if __name__ == '__main__':
 	main()
