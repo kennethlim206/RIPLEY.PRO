@@ -16,7 +16,7 @@ def get_other(directory, suffix):
 		sys.exit("ERROR: %s" % sdout)
 
 # Get .fastq files from a path
-def get_FASTQs(directory):
+def get_FASTQs(directory, depth=0):
 	status, sdout = commands.getstatusoutput("find %s -not -path '*/\.*' -type f -name '*.fastq*'" % directory)
 	if status == 0:
 		return_list = sorted(sdout.split("\n"))
@@ -24,6 +24,15 @@ def get_FASTQs(directory):
 		if return_list[0] == "":
 			sys.exit("ERROR: No fastq files found in the given directory: %s" % directory)
 		else:
+
+			# If order template variable is filled in
+			if depth > 0:
+				return_list_trimmed = []
+				for item in return_list:
+					if len(item.split("/")) == depth:
+						return_list_trimmed.append(item)
+				return_list = return_list_trimmed
+
 			return return_list
 	else:
 		sys.exit("ERROR: %s" % sdout)

@@ -24,6 +24,21 @@ def check(order, template, path_list):
 		if len(path_split) != len(order_split):
 			sys.exit("ERROR: your inputted file order does not match the actual fastq path: %s, %s" % (order, path))
 
+# For fucking idiotic use cases where the fastq file hierarchy makes 0 fucking sense
+def parse_paths(order, path_list):
+	order_split = order.split("/")
+	depth = len(order_split)
+
+	return_list = []
+
+	for path in path_list:
+		path_split = path.split("/")
+
+		if depth == len(path_split):
+			return_list.append(path)
+
+	return return_list
+
 def rename(order, template, path_list):
 	# order = /A/B/C/D/E/F/G
 	# template = F_G
@@ -59,8 +74,9 @@ def main():
 	ORDER = INPUT_STR.split(",", 1)[0]
 	TEMPLATE = INPUT_STR.split(",", 1)[1]
 
-	check(ORDER, TEMPLATE, RAW_PATHS)
-	rename(ORDER, TEMPLATE, RAW_PATHS)
+	# check(ORDER, TEMPLATE, RAW_PATHS)
+	RAW_PATHS_PARSED = parse_paths(ORDER, RAW_PATHS)
+	rename(ORDER, TEMPLATE, RAW_PATHS_PARSED)
 
 if __name__ == '__main__':
 	main()

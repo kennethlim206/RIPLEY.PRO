@@ -63,7 +63,23 @@ def main():
 
 		# PART 3: Retrieve INPUT DIR files based on suffix
 		if cd["INPUT TYPE"] == "FASTQ":
-			cd["INPUT FILES FULL"] = tools.get_FASTQs(cd["INPUT DIR"])
+
+			if "ORDER TEMPLATE" in td:
+				if td["ORDER TEMPLATE"] != "":
+
+					order = td["ORDER TEMPLATE"].split(",", 1)[0]
+					order_split = order.split("/")
+					depth = len(order_split)
+
+					if depth == 0:
+						sys.exit(" ERROR: at least 1 '/' character must be in <ORDER TEMPLATE> variable.")
+
+					cd["INPUT FILES FULL"] = tools.get_FASTQs(cd["INPUT DIR"], depth)
+				else:
+					cd["INPUT FILES FULL"] = tools.get_FASTQs(cd["INPUT DIR"])
+			else:
+				cd["INPUT FILES FULL"] = tools.get_FASTQs(cd["INPUT DIR"])
+
 		elif cd["INPUT TYPE"] == "BAM":
 			cd["INPUT FILES FULL"] = tools.get_BAMs(cd["INPUT DIR"])
 		elif "OTHER:" in cd["INPUT TYPE"]:
