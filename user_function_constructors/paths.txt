@@ -1,6 +1,7 @@
 # file_name	input_name	description
 function_download_SLIM.txt	get_slim	download data from SLIMS via rsync FTP
 function_download_SRR.txt	get_srr	download data from public server via fastq-dump SRR
+function_rename.txt	rename	for fastq hierarchies where fastq name isn't unique
 function_align.txt	align	STAR aligner
 function_featureCount.txt	feature	subread featureCounts
 function_rseqc_all.txt	rqc_all	merged genome coverage plot for all samples
