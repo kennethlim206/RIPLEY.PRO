@@ -117,16 +117,17 @@ def main():
 				else:
 					cd["INPUT FILES TRIMMED"] = ["ALL"]
 
-			# For ALIGN jobs, replace specified suffix with _SE or _PE
+			# For ALIGN jobs, replace specified suffix with _SE or _PE <- except don't do this!
+			# Yay! Hopefully this will commit now! Woohoo!
 			if cd["FUNCTION NAME"] == "ALIGN":
 				for i in range(0,len(cd["INPUT FILES TRIMMED"])):
 					# 
 					if td["FASTQ SUFFIX"] not in cd["INPUT FILES TRIMMED"][i]:
 						sys.exit("ERROR: Please adjust <FASTQ SUFFIX> in task sheet. Suffix not found in file name: %s" % cd["INPUT FILES TRIMMED"][i])
 					if td["SINGLE PAIR"] == "SE":
-						cd["INPUT FILES TRIMMED"][i] = cd["INPUT FILES TRIMMED"][i].replace(td["FASTQ SUFFIX"], "_SE")
+						cd["INPUT FILES TRIMMED"][i] = cd["INPUT FILES TRIMMED"][i].replace(td["FASTQ SUFFIX"], "")
 					elif td["SINGLE PAIR"] == "PE":
-						cd["INPUT FILES TRIMMED"][i] = cd["INPUT FILES TRIMMED"][i].replace(td["FASTQ SUFFIX"], "_PE")
+						cd["INPUT FILES TRIMMED"][i] = cd["INPUT FILES TRIMMED"][i].replace(td["FASTQ SUFFIX"], "")
 					else:
 						sys.exit("ERROR: Incorrect input into <PAIRED SUFFIX> task variable.")
 
