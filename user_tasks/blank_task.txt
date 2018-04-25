@@ -37,7 +37,7 @@ DESCRIPTION:
 •-------------------------------------------- DOWNLOAD --------------------------------------------•
 
 # The URL given by SLIMS for downloading data via FTP/rsync request.
-# http://slimsdata.genomecenter.ucdavis.edu/Data/
+# http://slimsdata.genomecenter.ucdavis.edu/Data/ <- do not include this portion of the URL
 <FTP COMMAND> 
 
 # Single or multiple SRR IDs (comma delimited, if multiple) for download via fastq-dump.

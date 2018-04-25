@@ -3,7 +3,9 @@ function_download_SLIM.txt	get_slim	download data from SLIMS via rsync FTP
 function_download_SRR.txt	get_srr	download data from public server via fastq-dump SRR
 function_rename.txt	rename	for fastq hierarchies where fastq name isn't unique
 function_align.txt	align	STAR aligner
-function_featureCount.txt	feature	subread featureCounts
-function_rseqc_all.txt	rqc_all	merged genome coverage plot for all samples
-function_rseqc_ind.txt	rqc_ind	individual useful rseqc functions
+function_fastqc.txt	fqc	individual qc functions for fastq files
+function_rseqc_ind.txt	rqc_ind	individual qc functions for bam files
+function_rseqc_all.txt	rqc_all	merged genome coverage plot for bam files
+function_featureCount.txt	feature	gene counts by sample in matrix form based on features in gtf
+function_view.txt	view	amplicon (range) specific coverage counts
 function_mpileup.txt	pile	allele specific coverage counts

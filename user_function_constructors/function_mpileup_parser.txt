@@ -62,7 +62,7 @@ This function constructor sheet will be copied into your RED (RIPLEY Execution D
 •--------------------------------------------------------------------------------------------------•
 
 # Output files can be found in this directory (RAW, INDEX, POST:[JOB NAME])
-<OUTPUT DIR> POST:MP_PARSED
+<OUTPUT DIR> POST:ALLELE_COUNTS
 
 
 

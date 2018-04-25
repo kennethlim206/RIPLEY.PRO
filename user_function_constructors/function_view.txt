@@ -24,7 +24,7 @@ This function constructor sheet will be copied into your RED (RIPLEY Execution D
 |                                                                                                  |
 •--------------------------------------------------------------------------------------------------•
 
-<FUNCTION NAME> INDEX_CHECK
+<FUNCTION NAME> VIEW
 
 # Function to be run automatically after this one (constructor file name)
 <AUTO CALL> 
@@ -33,8 +33,8 @@ This function constructor sheet will be copied into your RED (RIPLEY Execution D
 <DEPENDENCY> afterok
 
 # Sbatch parameters
-<TIME> 01:00:00
-<PARTITION> gc128
+<TIME> 06:00:00
+<PARTITION> gc
 <CORES> default
 <MEM PER CPU> default
 
@@ -62,7 +62,7 @@ This function constructor sheet will be copied into your RED (RIPLEY Execution D
 •--------------------------------------------------------------------------------------------------•
 
 # Output files can be found in this directory (RAW, INDEX, POST:[JOB NAME])
-<OUTPUT DIR> POST:ALIGN
+<OUTPUT DIR> POST:AMPLICON_COUNTS
 
 
 
@@ -79,6 +79,6 @@ This function constructor sheet will be copied into your RED (RIPLEY Execution D
 
 module load <SAMTOOLS MODULE>
 
-samtools index <INPUT FILES FULL>
+python <WORKING DIR>/user_function_constructors/function_tools/run_view.py <INPUT FILES FULL> <AMP FILE> <OUTPUT DIR>/<INPUT FILES TRIMMED>.txt
 
 }
