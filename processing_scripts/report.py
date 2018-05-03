@@ -262,7 +262,7 @@ def main(t,f):
 								resubmit.main(resubmit_input_path)
 							else:
 								for file in ERR_LT[int(resubmit_input)]:
-									current_script_path = "%s/%s" % (ERR, file)
+									current_script_path = "%s/%s" % (SCR, file.replace(".err", ".sh"))
 									resubmit.main(current_script_path)
 						else:
 							print " Understood. I will not submit your script."

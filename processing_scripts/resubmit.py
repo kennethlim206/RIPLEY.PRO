@@ -4,26 +4,26 @@ import imp
 import commands
 from datetime import datetime
 
-def main(selected_error_path):
+def main(selected_script_path):
 
 	# Set variable paths based on input script
-	RED = selected_error_path.rsplit("/", 2)[0]
+	RED = selected_script_path.rsplit("/", 2)[0]
 	ARC = "%s/archive" % RED
 	SUB = "%s/submission_record.txt" % RED
 
-	selected_script = selected_error_path.rsplit("/", 1)[1].replace(".err", ".sh")
+	selected_script = selected_script_path.rsplit("/", 1)[1].replace(".err", ".sh")
 
 	print " Resubmitting: %s" % selected_script
 
-	selected_output_path = selected_error_path.replace("sbatch_error", "sbatch_output")
-	selected_output_path = selected_output_path.replace(".err", ".out")
-	selected_script_path = selected_error_path.replace("sbatch_error", "sbatch_scripts")
-	selected_script_path = selected_script_path.replace(".err", ".sh")
+	selected_output_path = selected_script_path.replace("sbatch_scripts", "sbatch_output")
+	selected_output_path = selected_output_path.replace(".sh", ".out")
+	selected_error_path = selected_script_path.replace("sbatch_scripts", "sbatch_error")
+	selected_error_path = selected_error_path.replace(".sh", ".err")
 
 	print " Archiving old error messages..."
 
 	# Move output and error to archive
-	now = datetime.now().strftime("%m.%d.%Y-%H:%M:%S")
+	now = datetime.now().strftime("%m.%d.%Y-%H.%M")
 	archive_time_dir = "%s/%s" % (ARC, now)
 
 	if not os.path.isdir(archive_time_dir):
