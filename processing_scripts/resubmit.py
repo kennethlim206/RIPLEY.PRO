@@ -55,13 +55,16 @@ def main(selected_script_path):
 		if "<SUBMITTED>" not in new_entry and "\t" in new_entry:
 			# Add 'current' annotation, if it doesn't exist already
 			if "current" not in new_entry:
-				new_entry = entry.replace("\n", "\tcurrent\n")
+				if selected_script in entry:
+					new_entry = entry.replace("\n", "old\n")
+				else:
+					new_entry = entry.replace("\n", "current\n")
+			else:
+				# If script is resubmitted, annotate old entry with 'old'
+				if selected_script in entry:
+					new_entry = entry.replace("current", "old")
 
-			# If script is resubmitted, annotate old entry with 'old'
-			if selected_script in entry:
-				new_entry = entry.replace("current", "old")
-
-			submission_record_new.write(new_entry)
+		submission_record_new.write(new_entry)
 
 	submission_record_new.close()
 	submission_record.close()
