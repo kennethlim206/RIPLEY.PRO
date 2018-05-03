@@ -145,5 +145,11 @@ DESCRIPTION:
 
 •------------------------------------------- OTHER CMDS -------------------------------------------•
 
+# Amplicons for these data. Amplicons should be stored in a bed4 format in the folder amp_beds.
+<AMP FILE> 
+
+# Renames fastq files that are not unique. See readMe for more instructions.
+<ORDER TEMPLATE> 
+
 # Space for other post processing parameters
 

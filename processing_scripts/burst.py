@@ -356,7 +356,6 @@ def main():
 
 	return_string = ""
 	submission_record = open("%s/submission_record.txt" % record["red"], "a")
-	submission_record.write("TEST\n")
 	submit_time = commands.getoutput("grep '<SUBMITTED>' %s/submission_record.txt" % record["red"])
 	
 	if submit_time == "":
@@ -385,7 +384,7 @@ def main():
 			sys.exit("ERROR:\n%s" % ID)
 
 		# Output job submission statements
-		submission_record.write("%s\t%s\t%s\n" % (pre_submit_print, sp, ID))
+		submission_record.write("%s\t%s\t%s\tcurrent\n" % (pre_submit_print, sp, ID))
 
 		return_string += "%s:" % ID
 

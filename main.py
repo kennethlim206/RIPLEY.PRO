@@ -17,8 +17,7 @@ def main():
 	test = False
 
 	# Load progress report module
-	report = imp.load_source("report", "./processing_scripts/progress_report.py")
-	resubmit = imp.load_source("resubmit", "./processing_scripts/resubmit.py")
+	report = imp.load_source("report", "./processing_scripts/report.py")
 
 	os.popen("chmod +x ./processing_scripts/*.sh")
 
@@ -36,8 +35,11 @@ def main():
 
 	# Keeps user in the interface, until they choose to exit
 	task_exit = False
-	
+	function_exit = False
+
 	while not task_exit:
+		task_exit = False
+		function_exit = False
 
 		# Input task from user
 		print " ------------------------------------------------------------------------------- "
@@ -65,8 +67,10 @@ def main():
 
 		task_input = raw_input(" >>> ")
 
+		# Exit command
 		if task_input == "exit":
-			sys.exit(" Bye for now!")
+			task_exit = True
+			break
 
 		# Error for non-numeric input
 		try:
@@ -88,10 +92,7 @@ def main():
 		else:
 			print " You selected the input file: %s" % input_list[task_input].replace(".txt", "")
 
-
-
-		function_input = ""
-		while function_input != "exit":
+		while not function_exit:
 
 			# Input function from user
 			print "\n\n"
@@ -122,13 +123,21 @@ def main():
 			function_files.close()
 
 			print ""
+			print " back"
 			print " exit"
 			print " ------------------------------------------------------------------------------- "
 			print ""
 
 			function_input = raw_input(" >>> ")
 
+			# Exit commands
 			if function_input == "exit":
+				task_exit = True
+				function_exit = True
+				break
+
+			if function_input == "back":
+				function_exit = True
 				break
 
 			# Parse and load function info
@@ -205,24 +214,26 @@ def main():
 			print " submit = submit your chosen function/string of functions to the sbatch queue"
 
 			if "->" not in function_input:
-				print " report = check the progress of your chosen function"
-				print " resubmit = resubmit a singular sbatch script from your chosen function"
+				print " report = check the progress of your chosen function and resubmit, if failure."
 			
 			print ""
+			print " back"
 			print " exit"
 			print " ------------------------------------------------------------------------------- "
 			print ""
 
 			action_input = raw_input(" >>> ")
 
-			if action_input != "exit":
+			if action_input == "exit":
+				function_exit = True
+				task_exit = True
+				break
+
+			if action_input != "back":
 
 				# Go into report progress
 				if action_input == "report" and "->" not in function_input:
 					report.main(task_input_path, "./user_function_constructors/%s" % function_options[function_input])
-
-				elif action_input == "resubmit" and "->" not in function_input:
-					resubmit.main(task_input_path, "./user_function_constructors/%s" % function_options[function_input])
 				
 				elif action_input == "submit":
 					
@@ -270,7 +281,6 @@ def main():
 
 			sys.stdout.write(" Returning to step 2 ")
 			sys.stdout.flush()
-			time.sleep(1)
 
 			for i in range(0,3):
 				sys.stdout.write(".")
@@ -280,18 +290,8 @@ def main():
 			print ""
 			print ""
 
-
-
-		print " ------------------------------------------------------------------------------- "
-		print " Would you like to select a different dataset to work with? (y/n)\n"
-		more_task = raw_input(" >>> ")
-
-		if more_task == "y":
-			task_exit = False
-		elif more_task == "n":
+		if function_input == "exit":
 			task_exit = True
-		else:
-			sys.exit(" Incorrect input. Exiting program...")
 
 	print " Bye for now!"
 

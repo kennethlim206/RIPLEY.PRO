@@ -4,119 +4,77 @@ import imp
 import commands
 from datetime import datetime
 
-def main(t,f):
+def main(selected_error_path):
 
-	# Import processing modules
-	tools = imp.load_source("tools", "./processing_scripts/burst_tools.py")
-
-	# Load task info from reader
-	td = tools.task_reader(t)
-	cd = tools.function_reader(f)
-
-	LOOKUP_DIR = ""
-	if cd["OUTPUT DIR"] == "RAW":
-		LOOKUP_DIR = td["RAW DATA DIR"]
-	elif cd["OUTPUT DIR"] == "INDEX":
-		LOOKUP_DIR = td["INDEX DIR"]
-
-	elif "POST:" in cd["OUTPUT DIR"]:
-		LOOKUP_DIR = "%s/%s" % (td["POST DIR"], cd["OUTPUT DIR"].split(":")[1])
-
-	else:
-		sys.exit(" ERROR: Incorrect input into <OUTPUT DIR> command in function constructor.")
-
-	# Get job_ids, output and error file summary from RED
-	if not os.path.isdir(LOOKUP_DIR):
-		sys.exit(" ERROR: The following directory doesn't exist: %s" % LOOKUP_DIR)
-
-	RED = "%s/RED" % LOOKUP_DIR
-
-	if not os.path.isdir(RED):
-		sys.exit(" ERROR: You have chosen a directory that does not contain a RED: %s" % LOOKUP_DIR)
-
-	# Base progress report on submission record (anything downstream could have been cancelled)
-	OUT = "%s/sbatch_output" % RED
-	ERR = "%s/sbatch_error" % RED
-	SCR = "%s/sbatch_scripts" % RED
-	SUB = "%s/submission_record.txt" % RED
+	# Set variable paths based on input script
+	RED = selected_error_path.rsplit("/", 2)[0]
 	ARC = "%s/archive" % RED
+	SUB = "%s/submission_record.txt" % RED
 
-	if not os.path.isfile(SUB):
-		sys.exit(" ERROR: You have chosen a directory that does not contain a submission record: %s" % RED)
+	selected_script = selected_error_path.rsplit("/", 1)[1].replace(".err", ".sh")
 
-	sbatch_scripts = tools.get_other(SCR, ".sh")
+	print " Resubmitting: %s" % selected_script
 
-	print ""
-	print " SUBMISSION SCRIPTS:"
-	print " ------------------------------------------------------------------------------- "
+	selected_output_path = selected_error_path.replace("sbatch_error", "sbatch_output")
+	selected_output_path = selected_output_path.replace(".err", ".out")
+	selected_script_path = selected_error_path.replace("sbatch_error", "sbatch_scripts")
+	selected_script_path = selected_script_path.replace(".err", ".sh")
 
-	for full_path in sbatch_scripts:
-		print " %s" % full_path.rsplit("/", 1)[1]
+	print " Archiving old error messages..."
 
-	done = False
-	while not done:
+	# Move output and error to archive
+	now = datetime.now().strftime("%m.%d.%Y-%H:%M:%S")
+	archive_time_dir = "%s/%s" % (ARC, now)
 
-		print ""
-		print " Note: Resubmission is for individual script failure."
-		print " If all your jobs failed, consider using the 'submit' option instead."
-		print " The existing sbatch files will be archived and replaced with the resubmitted versions."
-		print ""
-		print " ------------------------------------------------------------------------------- "
-		print " Input the name of the selected script below, or type 'done' to return to Step 2."
-		print ""
+	if not os.path.isdir(archive_time_dir):
+		os.popen("mkdir %s" % archive_time_dir)
 
-		selected_script = raw_input(" >>> ")
+	os.popen("mv %s %s" % (selected_output_path, archive_time_dir))
+	os.popen("mv %s %s" % (selected_error_path, archive_time_dir))
 
-		if selected_script == "done":
-			done = True
+	# Copied from burst
+	status, ID = commands.getstatusoutput("sbatch %s" % selected_script_path)
 
-		else:
-			selected_script_path = "%s/%s" % (SCR, selected_script)
-			selected_output_path = "%s/%s" % (OUT, selected_script.replace(".sh", ".out"))
-			selected_error_path = "%s/%s" % (ERR, selected_script.replace(".sh", ".err"))
+	# Analyze result of sbatch submission
+	if status == 0:
 
-			if not os.path.isfile(selected_script_path):
-				sys.exit(" ERROR: You have chosen a script name that does not exist: %s" % selected_script)
+		ID_split = ID.split(" ")
+		ID = int(ID_split[3])
+	
+	else:
+		sys.exit("ERROR:\n%s" % ID)
 
-			print ""
-			print " Resubmitting ..."
+	# Edit submission record for current/obselete jobs
+	submission_record_new = open(SUB.replace("submission_record.txt", "submission_record_new.txt"), "w")
+	submission_record = open(SUB, "r")
 
-			# Move output and error to archive
-			now = datetime.now().strftime("%m.%d.%Y-%H:%M:%S")
-			archive_time_dir = "%s/%s" % (ARC, now)
+	# Update submission record
+	for entry in submission_record:
+		new_entry = entry
 
-			if not os.path.isdir(archive_time_dir):
-				os.popen("mkdir %s" % archive_time_dir)
+		if "<SUBMITTED>" not in new_entry and "\t" in new_entry:
+			# Add 'current' annotation, if it doesn't exist already
+			if "current" not in new_entry:
+				new_entry = entry.replace("\n", "\tcurrent\n")
 
-			os.popen("mv %s %s" % (selected_output_path, archive_time_dir))
-			os.popen("mv %s %s" % (selected_error_path, archive_time_dir))
+			# If script is resubmitted, annotate old entry with 'old'
+			if selected_script in entry:
+				new_entry = entry.replace("current", "old")
 
-			# Copied from burst
-			status, ID = commands.getstatusoutput("sbatch %s" % selected_script_path)
+			submission_record_new.write(new_entry)
 
-			# Analyze result of sbatch submission
-			if status == 0:
+	submission_record_new.close()
+	submission_record.close()
 
-				ID_split = ID.split(" ")
-				ID = int(ID_split[3])
-			
-			else:
-				sys.exit("ERROR:\n%s" % ID)
+	# Replace old submission record with new one
+	os.popen("mv %s %s" % (SUB.replace("submission_record.txt", "submission_record_new.txt"), SUB))
 
-			# Output job submission statements
-			submission_record = open(SUB, "a")
+	# Add new resubmission to submission record.
+	submission_record = open(SUB, "a")
 
-			submission_record.write("%s\t%s\t%s\n" % ("1/1", selected_script_path, ID))
-			submission_record.write("\n")
-			submission_record.close()
-
-			print ""
-			print " Your resubmission job was successfully submitted: %s" % ID
-			print ""
-
-
+	submission_record.write("%s\t%s\t%s\tcurrent\n" % ("1/1", selected_script_path, ID))
+	submission_record.write("\n")
+	submission_record.close()
 
 if __name__ == '__main__':
 	main()
-
-

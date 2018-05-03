@@ -6,8 +6,12 @@ from datetime import datetime
 
 def main(t,f):
 
+	# Number of days passed before live reporting is turned off
+	live_cutoff = 15
+
 	# Import processing modules
 	tools = imp.load_source("tools", "./processing_scripts/burst_tools.py")
+	resubmit = imp.load_source("resubmit", "./processing_scripts/resubmit.py")
 
 	# Load task info from reader
 	td = tools.task_reader(t)
@@ -83,8 +87,14 @@ def main(t,f):
 			path = data[1]
 			name = path.rsplit("/", 1)[1]
 			ID = data[2]
+			stage = "current"
 
-			ID_LT[int(ID)] = name
+			# Check for obselete submissions
+			if len(data) == 4:
+				stage = int(data[3])
+
+			if stage == "current":
+				ID_LT[int(ID)] = name
 
 	file.close()
 
@@ -107,7 +117,7 @@ def main(t,f):
 	if "days" in time_passed:
 		num_days = int(time_passed.split(" ")[0])
 
-		if num_days >= 7:
+		if num_days >= live_cutoff:
 			expired = True
 
 	# Look up table for ID and job suffix
@@ -148,14 +158,16 @@ def main(t,f):
 		print " ERROR REPORT:"
 		print " ------------------------------------------------------------------------------- "
 
+		# For displaying error files based on size
 		ERR_LT = dict()
+
 		for ID, name in sorted(ID_LT.iteritems()):
 			error_name = name.replace(".sh", ".err")
 			path = "%s/%s" % (ERR, error_name)
 
+			# Make sure job exists and add to appropriate size list
 			if not os.path.isfile(path):
 				print "%s does not exist. Job most likely failed." % error_name
-
 			else:
 				stat = int(commands.getoutput("stat -c%%s %s" % path))
 				
@@ -164,6 +176,7 @@ def main(t,f):
 				else:
 					ERR_LT[stat].append(error_name)
 
+		# Print files based on size
 		for stat, names in sorted(ERR_LT.iteritems()):
 			print " %i bytes:" % stat
 
@@ -172,21 +185,92 @@ def main(t,f):
 
 			print ""
 
-		print " Sbatch outputs text into .err files, even if they are not error messages."
+		print " Sbatch will output messages into .err files, even if they are not error messages."
 		print " Error files of uniform size can normally be trusted, while error files of differing"
-		print " sizes should be viewed."
+		print " sizes should be checked for real errors."
 		print ""
 
 		view = ""
+
 		while view != "done":
 			print " ------------------------------------------------------------------------------- "
 			print " Input error file name as listed above to view its contents,"
+			print " or type 'resubmit', if you wish to resubmit a specific sample script,"
 			print " or type 'done' to return to the step 2 menu."
 			print ""
 
 			view = raw_input(" >>> ")
 
-			if view != "done":
+			# Go to resubmit menu
+			if view == "resubmit":
+
+				resubmit_input = ""
+
+				while resubmit_input != "done":
+
+					print " RESUBMIT OPTIONS:"
+					print " ------------------------------------------------------------------------------- "
+
+					# Print files based on size
+					for stat, names in sorted(ERR_LT.iteritems()):
+						print " %i bytes:" % stat
+
+						for n in names:
+							print " %s" % n.replace(".err", ".sh")
+
+						print ""
+
+					print " Resubmit by inputting the name of a singular script as it appears above,"
+					print " or resubmit by inputting the number of bytes displayed above to resubmit every script of that size,"
+					print " or type 'done' to return to the step 2 menu."
+					print ""
+
+					resubmit_input = raw_input(" >>> ")
+
+					if resubmit_input != "done":
+						resubmit_input_path = "%s/%s" % (SCR, resubmit_input)
+
+						# Error checking for resubmission input
+						if not os.path.isfile(resubmit_input_path):
+							# Error for non-numeric input
+							try:
+								int(resubmit_input)
+							except ValueError:
+								sys.exit(" ERROR: Input file does not exist or input is not numeric.")
+
+							if int(resubmit_input) not in ERR_LT:
+								sys.exit(" ERROR: Input byte size is not an option from the above list.")
+
+						# 'Are you sure' check
+						print " You are about to resubmit the following script(s):"
+						if os.path.isfile(resubmit_input_path):
+							print " %s" % resubmit_input
+						else:
+							for file in ERR_LT[int(resubmit_input)]:
+								print " %s" % file.replace(".err", ".sh")
+
+						print ""
+						print " Are you sure you would like to submit these scripts? (y/n)"
+						print ""
+
+						sure = raw_input(" >>> ")
+
+						if sure == "y":
+
+							# For file inputs
+							if os.path.isfile(resubmit_input_path):
+								resubmit.main(resubmit_input_path)
+							else:
+								for file in ERR_LT[int(resubmit_input)]:
+									current_script_path = "%s/%s" % (ERR, file)
+									resubmit.main(current_script_path)
+						else:
+							print " Understood. I will not submit your script."
+							print ""
+
+				view = "done"
+
+			elif view != "done":
 
 				path = "%s/%s" % (ERR, view)
 
