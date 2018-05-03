@@ -91,7 +91,7 @@ def main(t,f):
 
 			# Check for obselete submissions
 			if len(data) == 4:
-				stage = int(data[3])
+				stage = data[3]
 
 			if stage == "current":
 				ID_LT[int(ID)] = name
