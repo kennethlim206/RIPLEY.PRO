@@ -288,7 +288,6 @@ def main():
 				time.sleep(1)
 
 			print ""
-			print ""
 
 		if function_input == "exit":
 			task_exit = True
