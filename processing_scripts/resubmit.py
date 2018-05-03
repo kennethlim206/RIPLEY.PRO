@@ -21,6 +21,7 @@ def main(selected_script_path):
 	selected_error_path = selected_error_path.replace(".sh", ".err")
 
 	print " Archiving old error messages..."
+	time.sleep(1)
 
 	# Move output and error to archive
 	now = datetime.now().strftime("%m.%d.%Y-%H.%M")
@@ -78,6 +79,8 @@ def main(selected_script_path):
 	submission_record.write("%s\t%s\t%s\tcurrent\n" % ("1/1", selected_script_path, ID))
 	submission_record.write("\n")
 	submission_record.close()
+
+	print ""
 
 if __name__ == '__main__':
 	main()
