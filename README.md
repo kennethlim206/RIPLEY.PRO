@@ -1,1 +1,1 @@
-RIPLEY.PRO is an RNA-seq interactive pipeline. Contact Kenneth Lim, kenneth.lim206@ucsf.edu with questions.
+RIPLEY.PRO is an RNA-seq interactive pipeline. Currently only works with a core that uses Slurm job scheduling. Contact Kenneth Lim, kenneth.lim@ucsf.edu with questions.
