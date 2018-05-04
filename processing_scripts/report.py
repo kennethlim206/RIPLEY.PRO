@@ -260,11 +260,14 @@ def main(t,f):
 
 							# For file inputs
 							if os.path.isfile(resubmit_input_path):
-								resubmit.main(resubmit_input_path)
+								resubmit.main(resubmit_input_path, "1/1")
 							else:
+								current = 1
+								total = len(ERR_LT[int(resubmit_input)])
 								for file in ERR_LT[int(resubmit_input)]:
 									current_script_path = "%s/%s" % (SCR, file.replace(".err", ".sh"))
-									resubmit.main(current_script_path)
+									resubmit.main(current_script_path, "%i/%i" % (current, total))
+									current += 1
 						else:
 							print " Understood. I will not submit your script."
 							print ""

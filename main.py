@@ -214,7 +214,7 @@ def main():
 			print " submit = submit your chosen function/string of functions to the sbatch queue"
 
 			if "->" not in function_input:
-				print " report = check the progress of your chosen function and resubmit, if failure."
+				print " report = check the progress of your chosen function with resubmission option."
 			
 			print ""
 			print " back"

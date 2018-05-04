@@ -5,7 +5,7 @@ import time
 import commands
 from datetime import datetime
 
-def main(selected_script_path):
+def main(selected_script_path, display_fraction):
 
 	# Set variable paths based on input script
 	RED = selected_script_path.rsplit("/", 2)[0]
@@ -56,11 +56,11 @@ def main(selected_script_path):
 
 		if "<SUBMITTED>" not in new_entry and "\t" in new_entry:
 			# Add 'current' annotation, if it doesn't exist already
-			if "current" not in new_entry:
+			if "\tcurrent" not in new_entry and "\told" not in new_entry:
 				if selected_script in entry:
-					new_entry = entry.replace("\n", "old\n")
+					new_entry = entry.replace("\n", "\told\n")
 				else:
-					new_entry = entry.replace("\n", "current\n")
+					new_entry = entry.replace("\n", "\tcurrent\n")
 			else:
 				# If script is resubmitted, annotate old entry with 'old'
 				if selected_script in entry:
@@ -77,7 +77,7 @@ def main(selected_script_path):
 	# Add new resubmission to submission record.
 	submission_record = open(SUB, "a")
 
-	submission_record.write("%s\t%s\t%s\tcurrent\n" % ("1/1", selected_script_path, ID))
+	submission_record.write("%s\t%s\t%s\tcurrent\n" % (display_fraction, selected_script_path, ID))
 	submission_record.write("\n")
 	submission_record.close()
 
