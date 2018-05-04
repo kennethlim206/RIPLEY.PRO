@@ -211,10 +211,10 @@ def main():
 
 			print " Action     Description"
 			print " ------------------------------------------------------------------------------- "
-			print " submit = submit your chosen function/string of functions to the sbatch queue"
+			print " s = submit your chosen function/string of functions to the sbatch queue"
 
 			if "->" not in function_input:
-				print " report = check the progress of your chosen function with resubmission option."
+				print " p = check the progress of your chosen function with resubmission option"
 			
 			print ""
 			print " back"
@@ -232,10 +232,10 @@ def main():
 			if action_input != "back":
 
 				# Go into report progress
-				if action_input == "report" and "->" not in function_input:
+				if action_input == "p" and "->" not in function_input:
 					report.main(task_input_path, "./user_function_constructors/%s" % function_options[function_input])
 				
-				elif action_input == "submit":
+				elif action_input == "s":
 					
 					# Generate string input to give to queen
 					function_string = ""
