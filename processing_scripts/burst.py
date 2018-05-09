@@ -246,7 +246,7 @@ def main():
 			cmd = cmd.replace("<%s>" % var, td[var])
 
 	# Add function variables to script
-	safe_list = ["INPUT FILES FULL", "INPUT FILES TRIMMED"]
+	safe_list = ["INPUT FILES FULL", "INPUT FILES TRIMMED", "SRR SPLIT"]
 	for var in cd:
 		if var not in safe_list:
 			if "<%s>" % var in cmd:
@@ -265,6 +265,12 @@ def main():
 			cmd_ind = cmd_ind.replace("<REVERSE STRAND>", PE_LT[input_full_ind])
 		else:
 			cmd_ind = cmd_ind.replace("<REVERSE STRAND>", "")
+
+		# For DOWNLOAD_SRR jobs only
+		if cd["FUNCTION NAME"] == "DOWNLOAD_SRR" and td["SINGLE PAIR"] == "PE":
+			cmd_ind = cmd_ind.replace("<SRR SPLIT>", "--split-files")
+		else:
+			cmd_ind = cmd_ind.replace("<SRR SPLIT>", "")
 
 		# Final step turn double empty spaces into single empty spaces to account for non-existent variables
 		cmd_ind = cmd_ind.replace("  ", " ")

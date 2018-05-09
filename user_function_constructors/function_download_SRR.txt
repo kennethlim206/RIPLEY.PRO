@@ -79,6 +79,6 @@ This function constructor sheet will be copied into your RED (RIPLEY Execution D
 
 module load sratoolkit
 
-fastq-dump --outdir <OUTPUT DIR> --gzip -I --split-files <INPUT FILES FULL>
+fastq-dump --outdir <OUTPUT DIR> --gzip -I <SRR SPLIT> <INPUT FILES FULL>
 
 }
