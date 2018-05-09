@@ -12,7 +12,7 @@ def main():
 	trash.main()
 
 	# Queue wait time
-	queue_time = 24
+	queue_time = 50
 	# If true, will not submit sbatch and return pseudo data instead
 	test = False
 
