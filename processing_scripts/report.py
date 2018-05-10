@@ -168,7 +168,7 @@ def main(t,f):
 
 			# Make sure job exists and add to appropriate size list
 			if not os.path.isfile(path):
-				print "%s does not exist. Job most likely failed." % error_name
+				print " %s does not exist. Job most likely failed." % error_name
 			else:
 				stat = int(commands.getoutput("stat -c%%s %s" % path))
 				
@@ -177,23 +177,24 @@ def main(t,f):
 				else:
 					ERR_LT[stat].append(error_name)
 
-		# Print files based on size
-		for stat, names in sorted(ERR_LT.iteritems()):
-			print " %i bytes:" % stat
-
-			for n in names:
-				print " %s" % n
-
-			print ""
-
 		print " Sbatch will output messages into .err files, even if they are not error messages."
 		print " Error files of uniform size can normally be trusted, while error files of differing"
 		print " sizes should be checked for real errors."
-		print ""
 
 		view = ""
 
 		while view != "done":
+			print " ------------------------------------------------------------------------------- "
+			print ""
+
+			# Print files based on size
+			for stat, names in sorted(ERR_LT.iteritems()):
+				print " %i bytes:" % stat
+
+				for n in names:
+					print " %s" % n
+
+			print ""
 			print " ------------------------------------------------------------------------------- "
 			print " Input error file name as listed above to view its contents,"
 			print " or type 'resubmit', if you wish to resubmit a specific sample script,"
