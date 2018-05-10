@@ -193,8 +193,8 @@ def main(t,f):
 
 				for n in names:
 					print " %s" % n
+				print ""
 
-			print ""
 			print " ------------------------------------------------------------------------------- "
 			print " Input error file name as listed above to view its contents,"
 			print " or type 'resubmit', if you wish to resubmit a specific sample script,"
