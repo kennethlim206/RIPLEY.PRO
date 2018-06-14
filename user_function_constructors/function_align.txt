@@ -34,7 +34,7 @@ This function constructor sheet will be copied into your RED (RIPLEY Execution D
 
 # Sbatch parameters
 <TIME> 12:00:00
-<PARTITION> gc128
+<PARTITION> production
 <CORES> 10
 <MEM PER CPU> 8G
 
