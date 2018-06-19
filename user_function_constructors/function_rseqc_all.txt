@@ -77,7 +77,7 @@ This function constructor sheet will be copied into your RED (RIPLEY Execution D
 
 <SCRIPT COMMAND> {
 
-module load rseqc/2.6.3
+module load rseqc/2.6.4
 
 geneBody_coverage.py -f pdf -o <OUTPUT DIR>/ALL_BAMS -r <USE BED> -i <INPUT FILES FULL>
 

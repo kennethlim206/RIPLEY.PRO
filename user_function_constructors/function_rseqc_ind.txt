@@ -33,9 +33,9 @@ This function constructor sheet will be copied into your RED (RIPLEY Execution D
 <DEPENDENCY> afterok
 
 # Sbatch parameters
-<TIME> 24:00:00
-<PARTITION> production
-<CORES> default
+<TIME> 48:00:00
+<PARTITION> assembly
+<CORES> 10
 <MEM PER CPU> 8GB
 
 
@@ -77,7 +77,7 @@ This function constructor sheet will be copied into your RED (RIPLEY Execution D
 
 <SCRIPT COMMAND> {
 
-module load rseqc/2.6.3
+module load rseqc/2.6.4
 
 bam_stat.py -i <INPUT FILES FULL> > <OUTPUT DIR>/bam_stat_<INPUT FILES TRIMMED>.txt
 
@@ -87,11 +87,14 @@ read_duplication.py -i <INPUT FILES FULL> -o <OUTPUT DIR>/read_dup_<INPUT FILES 
 
 read_GC.py -i <INPUT FILES FULL> -o <OUTPUT DIR>/read_GC_<INPUT FILES TRIMMED>
 
+RPKM_saturation.py -i <INPUT FILES FULL> -o <OUTPUT DIR>/rpkm_saturation_<INPUT FILES TRIMMED> -r <USE BED>
 
+FPKM_count.py -i <INPUT FILES FULL> -o <OUTPUT DIR>/fpkm_<INPUT FILES TRIMMED>.txt -r <USE BED>
+
+inner_distance.py -i <INPUT FILES FULL> -o <OUTPUT DIR>/idist_<INPUT FILES TRIMMED> -r <USE BED>
+
+junction_annotation.py -i <INPUT FILES FULL> -o <OUTPUT DIR>/janno_<INPUT FILES TRIMMED> -r <USE BED>
+
+junction_saturation.py -i <INPUT FILES FULL> -o <OUTPUT DIR>/jsat_<INPUT FILES TRIMMED> -r <USE BED>
 
 }
-
-# RPKM_saturation.py -i <INPUT FILES FULL> -o <OUTPUT DIR> -r <USE BED>
-# FPKM_count -i <INPUT FILES FULL> -o <OUTPUT DIR> -r <USE BED>
-# bam_stat.py -i <INPUT FILES FULL>
-# read_GC.py -i <INPUT FILES FULL>

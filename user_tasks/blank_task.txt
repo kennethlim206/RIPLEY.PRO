@@ -64,7 +64,7 @@ DESCRIPTION:
 •--------------------------------------------------------------------------------------------------•
 
 # STAR version
-<STAR MODULE> star/2.5.2b
+<STAR MODULE> star/2.5.3a
 
 •-------------------------------------------- REF INFO --------------------------------------------•
 
@@ -130,7 +130,7 @@ DESCRIPTION:
 •----------------------------------------- FEATURE COUNTS -----------------------------------------•
 
 # Subread version
-<SUBREAD MODULE> subread/1.5.0-p1
+<SUBREAD MODULE> subread/1.5.3
 
 # Other feature count parameters
 <FEATURECOUNT PARAMS> 
@@ -138,7 +138,7 @@ DESCRIPTION:
 •---------------------------------------- SAMTOOLS MPILEUP ----------------------------------------•
 
 # Samtools version
-<SAMTOOLS MODULE> samtools/1.4.1
+<SAMTOOLS MODULE> samtools/1.5
 
 # Other feature count parameters
 <MPILEUP PARAMS> 
