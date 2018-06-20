@@ -28,7 +28,7 @@ def main():
 	for i in range(0,len(function_list)):
 		function_path = function_list[i]
 
-		cmd = "srun --time=00:10:00 ./processing_scripts/burst_submitter.sh %s %s" % (task_path, function_path)
+		cmd = "srun --time=00:30:00 ./processing_scripts/burst_submitter.sh %s %s" % (task_path, function_path)
 
 		print " Submitting function %i/%i - %s" % (i+1, len(function_list), function_path.rsplit("/", 1)[1])
 		print " %s" % cmd
