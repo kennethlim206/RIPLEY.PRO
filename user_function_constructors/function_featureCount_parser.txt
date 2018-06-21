@@ -46,7 +46,7 @@ This function constructor sheet will be copied into your RED (RIPLEY Execution D
 
 # Use the variable <INPUT FILE> in the <SCRIPT COMMAND> below
 
-# Input files can be found in this directory (ONLINE, RAW, POST:[NAME])
+# Input files can be found in this directory (ONLINE, GENOME, RAW, POST:[NAME])
 <INPUT DIR> POST:FEATURECOUNT
 
 # Type of input file into this command (URL, SRR, FASTQ, BAM, OTHER:[SUFFIX], NONE)

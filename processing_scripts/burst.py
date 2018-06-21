@@ -44,7 +44,14 @@ def main():
 		else:
 			sys.exit("ERROR: <INPUT TYPE> variable in function constructor, %s must be URL or SRR when <INPUT DIR> is ONLINE.")
 
-	elif cd["INPUT DIR"] != "ONLINE":
+	elif cd["INPUT DIR"] == "GENOME":
+		if cd["INPUT TYPE"] == "NONE":
+			cd["INPUT FILES FULL"].append("INDEX")
+			cd["INPUT FILES TRIMMED"].append("INDEX")
+		else:
+			sys.exit("ERROR: <INPUT TYPE> variable in function constructor, %s must be NONE when <INPUT DIR> is GENOME.")
+
+	else:
 
 		# PART 2: Convert <INPUT DIR> to specified directory
 		if cd["INPUT DIR"] == "RAW":
@@ -327,7 +334,7 @@ def main():
 				# Place in RED of OUTPUT DIR
 				script_ind = open(script_ind_path, "w")
 
-				script_ind.write("#!/bin/bash -l\n\n")
+				script_ind.write("#!/bin/bash\n\n")
 
 				# Required for sbatch script
 				script_ind.write("#SBATCH --job-name=%s\n" % cd["FUNCTION NAME"])
