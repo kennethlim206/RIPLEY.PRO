@@ -2,7 +2,9 @@
 function_download_SLIM.txt	get_slim	download data from SLIMS via rsync FTP
 function_download_SRR.txt	get_srr	download data from public server via fastq-dump SRR
 function_rename.txt	rename	for fastq hierarchies where fastq name isn't unique
-function_align.txt	align	STAR aligner
+function_custom_concat.txt	customize	add custom sequences/annotations to fa and gtf files
+function_star_index.txt	index	STAR index reference genome
+function_star_align.txt	align	STAR aligner
 function_fastqc.txt	fqc	individual qc functions for fastq files
 function_rseqc_ind.txt	rqc_ind	individual qc functions for bam files
 function_rseqc_all.txt	rqc_all	merged genome coverage plot for bam files
