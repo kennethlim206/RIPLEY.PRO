@@ -78,20 +78,23 @@ This function constructor sheet will be copied into your RED (RIPLEY Execution D
 <SCRIPT COMMAND> {
 
 module load bwa
+module load bedtools2
 module load <SAMTOOLS MODULE>
 
 bwa mem -t <BWA THREAD> <BWA INDEX FA> <INPUT FILES FULL> <REVERSE STRAND> | samtools view -q <BWA QUALITY> -Shu - > <OUTPUT DIR>/<INPUT FILES TRIMMED>.bam
 
-sleep 5
+sleep 3
 
 samtools sort -@ <BWA THREAD> -o <OUTPUT DIR>/<INPUT FILES TRIMMED>.sorted.bam <OUTPUT DIR>/<INPUT FILES TRIMMED>.bam
 
-sleep 5
+sleep 3
 
 rm <OUTPUT DIR>/<INPUT FILES TRIMMED>.bam
 
 samtools index <OUTPUT DIR>/<INPUT FILES TRIMMED>.sorted.bam
 
-# bamToBed -i $BWA_PE_BAM.srt.bam > $BWA_PE_BAM.bed
+sleep 3
+
+bamToBed -i <OUTPUT DIR>/<INPUT FILES TRIMMED>.sorted.bam > <OUTPUT DIR>/<INPUT FILES TRIMMED>.bed
 
 }
