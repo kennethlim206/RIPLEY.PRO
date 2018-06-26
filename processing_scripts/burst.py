@@ -288,7 +288,7 @@ def main():
 			# Place in RED of OUTPUT DIR
 			script_ind = open(script_ind_path, "w")
 
-			script_ind.write("#!/bin/bash -l\n\n")
+			script_ind.write("#!/bin/bash\n\n")
 
 			# Required for sbatch script
 			script_ind.write("#SBATCH --job-name=%s\n" % cd["FUNCTION NAME"])
