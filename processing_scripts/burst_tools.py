@@ -39,7 +39,7 @@ def get_FASTQs(directory, depth=0):
 
 # Get .bam files from a path
 def get_BAMs(directory):
-	status, sdout = commands.getstatusoutput("find %s -not -path '*/\.*' -type f -name '*.sortedByCoord.out.bam'" % directory)
+	status, sdout = commands.getstatusoutput("find %s -not -path '*/\.*' -type f -name '*.bam'" % directory)
 	if status == 0:
 		sorted_list = sorted(sdout.split("\n"))
 		return_list = []
