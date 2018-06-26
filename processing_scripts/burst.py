@@ -106,7 +106,7 @@ def main():
 			# For ALIGN jobs with PE reads, split the sample names in half
 			PE_LT = dict()
 			FW_STRAND = []
-			if cd["FUNCTION NAME"] == "ALIGN" and td["SINGLE PAIR"] == "PE" and "<REVERSE STRAND>" in cd["SCRIPT COMMAND"]:
+			if "ALIGN" in cd["FUNCTION NAME"] and td["SINGLE PAIR"] == "PE" and "<REVERSE STRAND>" in cd["SCRIPT COMMAND"]:
 				for i in range(1, len(cd["INPUT FILES FULL"]), 2):
 					FW_path = cd["INPUT FILES FULL"][i-1]
 					RV_path = cd["INPUT FILES FULL"][i]
