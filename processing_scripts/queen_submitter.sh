@@ -1,9 +1,9 @@
-#!/bin/bash -l
+#!/bin/bash
 
 #SBATCH --job-name=QUEEN
 #SBATCH --output=./temp/queen-%j.out
 #SBATCH --error=./temp/queen-%j.err
-#SBATCH --partition=production
+#SBATCH --partition=assembly
 
 TASK="$1"
 FUNC="$2"

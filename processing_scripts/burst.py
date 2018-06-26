@@ -124,9 +124,8 @@ def main():
 				else:
 					cd["INPUT FILES TRIMMED"] = ["ALL"]
 
-			# For ALIGN jobs, replace specified suffix with _SE or _PE <- except don't do this!
-			# Yay! Hopefully this will commit now! Woohoo!
-			if cd["FUNCTION NAME"] == "ALIGN":
+			# For ALIGN jobs, replace specified suffix
+			if "ALIGN" in cd["FUNCTION NAME"]:
 				for i in range(0,len(cd["INPUT FILES TRIMMED"])):
 					# 
 					if td["FASTQ SUFFIX"] not in cd["INPUT FILES TRIMMED"][i]:

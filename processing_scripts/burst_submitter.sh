@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/bash
 
 TASK="$1"
 FUNC="$2"
