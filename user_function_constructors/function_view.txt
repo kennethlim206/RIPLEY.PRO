@@ -79,6 +79,6 @@ This function constructor sheet will be copied into your RED (RIPLEY Execution D
 
 module load <SAMTOOLS MODULE>
 
-python <WORKING DIR>/user_function_constructors/function_tools/run_view.py <INPUT FILES FULL> <AMP FILE> <OUTPUT DIR>/<INPUT FILES TRIMMED>.txt
+python <WORKING DIR>/user_function_constructors/function_tools/run_view.py <INPUT FILES FULL> <WORKING DIR>/amp_beds/<AMP FILE> <OUTPUT DIR>/<INPUT FILES TRIMMED>.txt
 
 }
