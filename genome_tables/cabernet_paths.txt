@@ -59,7 +59,7 @@ ID	ORGANISM	SPECIES	ASSEMBLY	GENOME
 <REF ID> 7
 <REF FA> /share/nordlab/genomes/Mus_musculus/UCSC/mm9/Sequence/WholeGenomeFasta/genome.fa
 <REF ANNO> /share/nordlab/genomes/Mus_musculus/UCSC/mm9/Annotation/Genes/genes.gtf
-<REF BED> /share/nordlab/genomes/Mus_musculus/UCSC/mm9/Annotation/Genes/mm9_knownGene.bed
+<REF BED> /share/nordlab/genomes/Mus_musculus/UCSC/mm9/mm9_UCSC_knownGene.sorted.bed
 
 <REF ID> 8
 <REF FA> /share/nordlab/genomes/Rattus_norvegicus/UCSC/rn5/Sequence/WholeGenomeFasta/genome.fa
