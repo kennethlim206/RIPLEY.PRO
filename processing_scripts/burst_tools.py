@@ -28,7 +28,7 @@ def get_FASTQs(directory, depth=0):
 			# Get rid of sanger sequencing
 			no_sanger = []
 			for item in return_list:
-				if item.split(".fastq",1)[1] == "" or item.split(".fastq",1)[1] == ".":
+				if item.split(".fastq",1)[1] == "" or item.split(".fastq",1)[1] == ".gz" or item.split(".fastq",1)[1] == ".bzip2":
 					no_sanger.append(item)
 
 			return_list = no_sanger
