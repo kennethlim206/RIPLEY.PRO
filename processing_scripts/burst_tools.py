@@ -25,6 +25,14 @@ def get_FASTQs(directory, depth=0):
 			sys.exit("ERROR: No fastq files found in the given directory: %s" % directory)
 		else:
 
+			# Get rid of sanger sequencing
+			no_sanger = []
+			for item in return_list:
+				if item.split(".fastq",1)[1] == "" or item.split(".fastq",1)[1] == ".":
+					no_sanger.append(item)
+
+			return_list = no_sanger
+
 			# If order template variable is filled in
 			if depth > 0:
 				return_list_trimmed = []
