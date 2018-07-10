@@ -78,6 +78,7 @@ This function constructor sheet will be copied into your RED (RIPLEY Execution D
 <SCRIPT COMMAND> {
 
 module load rseqc/2.6.4
+module load R/3.5.0
 
 bam_stat.py -i <INPUT FILES FULL> > <OUTPUT DIR>/bam_stat_<INPUT FILES TRIMMED>.txt
 
