@@ -53,7 +53,7 @@ def get_BAMs(directory):
 		return_list = []
 
 		for i in sorted_list:
-			if ".bai" not in i:
+			if ".bai" not in i and "toTranscriptome" not in i:
 				return_list.append(i)
 
 		if return_list[0] == "":
